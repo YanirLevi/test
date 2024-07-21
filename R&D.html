@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שאלון מעבר לענן עבור מחלקת R&D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap');
+        body {
+    font-family: 'Heebo', sans-serif;
+    background-color: #f0f4f8;
+    text-align: right;
+}
+        .question {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .question:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .section-title {
+            background-color: #4a5568;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .progress {
+            height: 100%;
+            background-color: #4299e1;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        select, input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+        button {
+            background-color: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #3182ce;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-3xl mx-auto">
+        <!-- התחלת הטופס וחלקו הראשון נשארים זהים, לכן הושמטו לשם קיצור -->
+ <h1 class="text-3xl font-bold mb-6 text-center">שאלון מעבר לענן עבור מחלקת R&D</h1>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progressBar" style="width: 0%;"></div>
+        </div>
+        <div id="progressText" class="text-center mb-4">0 מתוך 31 שאלות נענו</div>
+        <form id="surveyForm">
+            <!-- מידע כללי -->
+            <div class="section-title">
+                <h2 class="text-xl font-bold">מידע כללי</h2>
+            </div>
+
+            <div class="question">
+                <label class="font-bold">1. מהו גודל צוות ה-R&D שלכם?</label><br>
+                <select name="team_size" required>
+                    <option value="">בחר אפשרות</option>
+                    <option value="1-10">1-10</option>
+                    <option value="11-50">11-50</option>
+                    <option value="51-100">51-100</option>
+                    <option value="101-500">101-500</option>
+                    <option value="500+">500+</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <label class="font-bold">2. מהם סוגי המוצרים/שירותים העיקריים שאתם מפתחים? (ניתן לסמן יותר מאחד)</label><br>
+                <input type="checkbox" name="product_type" value="SaaS"> תוכנה כשירות (SaaS)<br>
+                <input type="checkbox" name="product_type" value="Traditional"> מוצרי תוכנה מסורתיים<br>
+                <input type="checkbox" name="product_type" value="Security"> פתרונות אבטחת מידע<br>
+                <input type="checkbox" name="product_type" value="BI"> כלי ניתוח נתונים ו-BI<br>
+                <input type="checkbox" name="product_type" value="IoT"> פתרונות IoT<br>
+                <input type="checkbox" name="product_type" value="Mobile"> אפליקציות מובייל<br>
+                <input type="checkbox" name="product_type" value="Other"> אחר:
+                <input type="text" name="product_type_other" class="mt-2">
+            </div>
+
+            <div class="question">
+                <label class="font-bold">3. מהי הארכיטקטורה הנוכחית של המערכות שלכם? (ניתן לסמן יותר מאחד)</label><br>
+                <input type="checkbox" name="architecture" value="Monolithic"> מונוליתית<br>
+                <input type="checkbox" name="architecture" value="Microservices"> מיקרו-שירותים<br>
+                <input type="checkbox" name="architecture" value="Serverless"> Serverless<br>
+                <input type="checkbox" name="architecture" value="Hybrid"> היברידית<br>
+                <input type="checkbox" name="architecture" value="Other"> אחר:
+                <input type="text" name="architecture_other" class="mt-2">
+            </div>
+
+            <!-- מתודולוגיות עבודה -->
+            <div class="section-title">
+                <h2 class="text-xl font-bold">מתודולוגיות עבודה</h2>
+            </div>
+
+            <div class="question">
+                <label class="font-bold">4. באיזו מתודולוגיית פיתוח אתם משתמשים?</label><br>
+                <select name="development_methodology" required>
+                    <option value="">בחר אפשרות</option>
+                    <option value="Agile Scrum">Agile Scrum</option>
+                    <option value="Kanban">Kanban</option>
+                    <option value="Waterfall">Waterfall</option>
+                    <option value="XP">Extreme Programming (XP)</option>
+                    <option value="Lean">Lean</option>
+                    <option value="Other">אחר</option>
+                </select>
+                <input type="text" name="development_methodology_other" class="mt-2 hidden" placeholder="פרט">
+            </div>
+
+            <div class="question">
+                <label class="font-bold">5. תארו את תהליך ה-Sprint/Iteration שלכם (אורך, תדירות פגישות, וכו'):</label><br>
+                <textarea name="sprint_process" rows="4" required></textarea>
+            </div>
+
+            <!-- ניהול פרויקטים -->
+            <div class="section-title">
+                <h2 class="text-xl font-bold">ניהול פרויקטים</h2>
+            </div>
+
+            <div class="question">
+                <label class="font-bold">6. באיזה כלי ניהול פרויקטים אתם משתמשים כיום?</label><br>
+                <select name="project_management_tool" required>
+                    <option value="">בחר אפשרות</option>
+                    <option value="TFS">TFS</option>
+                    <option value="Jira">Jira</option>
+                    <option value="Trello">Trello</option>
+                    <option value="Asana">Asana</option>
+                    <option value="Monday.com">Monday.com</option>
+                    <option value="Azure DevOps">Azure DevOps</option>
+                    <option value="Other">אחר</option>
+                </select>
+                <input type="text" name="project_management_tool_other" class="mt-2 hidden" placeholder="פרט">
+            </div>
+
+            <div class="question">
+                <label class="font-bold">7. מהן הפונקציות העיקריות שאתם משתמשים בהן בכלי ניהול הפרויקטים הנוכחי? (ניתן לסמן יותר מאחד)</label><br>
+                <input type="checkbox" name="project_management_features" value="Task Management"> ניהול משימות<br>
+                <input type="checkbox" name="project_management_features" value="Sprint Planning"> תכנון Sprints<br>
+                <input type="checkbox" name="project_management_features" value="Time Reporting"> דיווח שעות<br>
+                <input type="checkbox" name="project_management_features" value="Bug Tracking"> ניהול באגים<br>
+                <input type="checkbox" name="project_management_features" value="Reports"> דוחות וניתוחים<br>
+                <input type="checkbox" name="project_management_features" value="Kanban Boards"> לוחות Kanban<br>
+                <input type="checkbox" name="project_management_features" value="Other"> אחר:
+                <input type="text" name="project_management_features_other" class="mt-2">
+            </div>
+
+            <div class="question">
+                <label class="font-bold">8. אילו פונקציות חסרות לכם בכלי הנוכחי שהייתם רוצים לראות בפתרון מבוסס ענן?</label><br>
+                <textarea name="missing_features" rows="4" required></textarea>
+            </div>
+
+            <!-- תהליך פיתוח ואינטגרציה (CI/CD) -->
+            <div class="section-title">
+                <h2 class="text-xl font-bold">תהליך פיתוח ואינטגרציה (CI/CD)</h2>
+            </div>
+
+            <div class="question">
+                <label class="font-bold">9. באיזה כלי CI/CD אתם משתמשים כיום?</label><br>
+                <select name="ci_cd_tool" required>
+                    <option value="">בחר אפשרות</option>
+                    <option value="Jenkins">Jenkins</option>
+                    <option value="GitLab CI/CD">GitLab CI/CD</option>
+                    <option value="Azure DevOps">Azure DevOps</option>
+                    <option value="CircleCI">CircleCI</option>
+                    <option value="Travis CI">Travis CI</option>
+                    <option value="GitHub Actions">GitHub Actions</option>
+                    <option value="Other">אחר</option>
+                </select>
+                <input type="text" name="ci_cd_tool_other" class="mt-2 hidden" placeholder="פרט">
+            </div>
+
+            <div class="question">
+                <label class="font-bold">10. כמה תדיר אתם מבצעים בניות ופריסות?</label><br>
+                <select name="build_deploy_frequency" required>
+                    <option value="">בחר אפשרות</option>
+                    <option value="Multiple times a day">מספר פעמים ביום</option>
+                    <option value="Once a day">פעם ביום</option>
+                    <option value="Multiple times a week">מספר פעמים בשבוע</option>
+                    <option value="Once a week">פעם בשבוע</option>
+                    <option value="Less than once a week">פחות מפעם בשבוע</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <label class="font-bold">11. תארו בקצרה את תהליך האוטומציה לבדיקות הרגרסיה שלכם:</label><br>
+                <textarea name="regression_testing_process" rows="4" required></textarea>
+            </div>
+
+            <div class="question">
+                <label class="font-bold">12. איך אתם מנהלים גרסאות קוד ובקרת מקור?</label><br>
+                <select name="version_control" required>
+                    <option value="">בחר אפשרות</option>
+                    <option value="Git">Git</option>
+                    <option value="SVN">SVN</option>
+                    <option value="Mercurial">Mercurial</option>
+                    <option value="Perforce">Perforce</option>
+                    <option value="Other">אחר</option>
+                </select>
+                <input type="text" name="version_control_other" class="mt-2 hidden" placeholder="פרט">
+            </div>
+
+            <!-- סריקות ובדיקות אבטחה -->
+            <div class="section-title">
+                <h2 class="text-xl font-bold">סריקות ובדיקות אבטחה</h2>
+            </div>
+
+            <div class="question">
+                <label class="font-bold">13. באילו כלי סריקת קוד סטטי (SAST) אתם משתמשים?</label><br>
+                <select name="sast_tool" required>
+                    <option value="">בחר אפשרות</option>
+                    <option value="SonarQube">SonarQube</option>
+                    <option value="Checkmarx">Checkmarx</option>
+                    <option value="Veracode">Veracode</option>
+                    <option value="Fortify">Fortify</option>
+                    <option value="Other">אחר</option>
+                </select>
+                <input type="text" name="sast_tool_other" class="mt-2 hidden" placeholder="פרט">
+            </div>
+        <div class="question">
+            <label class="font-bold">14. האם אתם מבצעים סריקות אבטחה דינמיות (DAST)? אם כן, באילו כלים?</label><br>
+            <select name="dast_tool" required>
+                <option value="">בחר אפשרות</option>
+                <option value="None">לא מבצעים</option>
+                <option value="OWASP ZAP">OWASP ZAP</option>
+                <option value="Burp Suite">Burp Suite</option>
+                <option value="Acunetix">Acunetix</option>
+                <option value="Nessus">Nessus</option>
+                <option value="Other">אחר</option>
+            </select>
+            <input type="text" name="dast_tool_other" class="mt-2 hidden" placeholder="פרט">
+        </div>
+
+        <div class="question">
+            <label class="font-bold">15. כיצד אתם מנהלים ומטפלים בממצאי הסריקות?</label><br>
+            <textarea name="scan_findings_management" rows="4" required></textarea>
+        </div>
+
+        <!-- ניהול ארטיפקטים -->
+        <div class="section-title">
+            <h2 class="text-xl font-bold">ניהול ארטיפקטים</h2>
+        </div>
+
+        <div class="question">
+            <label class="font-bold">16. באיזה פתרון Artifactory אתם משתמשים כיום?</label><br>
+            <select name="artifactory_solution" required>
+                <option value="">בחר אפשרות</option>
+                <option value="JFrog Artifactory">JFrog Artifactory</option>
+                <option value="Nexus Repository">Nexus Repository</option>
+                <option value="Azure Artifacts">Azure Artifacts</option>
+                <option value="GitHub Packages">GitHub Packages</option>
+                <option value="Amazon S3">Amazon S3</option>
+                <option value="Other">אחר</option>
+            </select>
+            <input type="text" name="artifactory_solution_other" class="mt-2 hidden" placeholder="פרט">
+        </div>
+
+        <div class="question">
+            <label class="font-bold">17. אילו סוגי ארטיפקטים אתם מאחסנים? (ניתן לסמן יותר מאחד)</label><br>
+            <input type="checkbox" name="artifact_types" value="npm"> חבילות npm<br>
+            <input type="checkbox" name="artifact_types" value="Docker"> Docker images<br>
+            <input type="checkbox" name="artifact_types" value="Maven"> Maven artifacts<br>
+            <input type="checkbox" name="artifact_types" value="NuGet"> NuGet packages<br>
+            <input type="checkbox" name="artifact_types" value="PyPI"> PyPI packages<br>
+            <input type="checkbox" name="artifact_types" value="Other"> אחר:
+            <input type="text" name="artifact_types_other" class="mt-2">
+        </div>
+
+        <!-- בדיקות -->
+        <div class="section-title">
+            <h2 class="text-xl font-bold">בדיקות</h2>
+        </div>
+
+        <div class="question">
+            <label class="font-bold">18. אילו סוגי בדיקות אתם מבצעים? (ניתן לסמן יותר מאחד)</label><br>
+            <input type="checkbox" name="test_types" value="Unit"> בדיקות יחידה<br>
+            <input type="checkbox" name="test_types" value="Integration"> בדיקות אינטגרציה<br>
+            <input type="checkbox" name="test_types" value="E2E"> בדיקות קצה-לקצה<br>
+            <input type="checkbox" name="test_types" value="Performance"> בדיקות ביצועים<br>
+            <input type="checkbox" name="test_types" value="Security"> בדיקות אבטחה<br>
+            <input type="checkbox" name="test_types" value="Usability"> בדיקות שימושיות<br>
+            <input type="checkbox" name="test_types" value="Other"> אחר:
+            <input type="text" name="test_types_other" class="mt-2">
+        </div>
+
+        <div class="question">
+            <label class="font-bold">19. באילו כלי בדיקות אתם משתמשים?</label><br>
+            <select name="testing_tools" required multiple>
+                <option value="Selenium">Selenium</option>
+                <option value="JUnit">JUnit</option>
+                <option value="TestNG">TestNG</option>
+                <option value="Cypress">Cypress</option>
+                <option value="Postman">Postman</option>
+                <option value="JMeter">JMeter</option>
+                <option value="Other">אחר</option>
+            </select>
+            <input type="text" name="testing_tools_other" class="mt-2 hidden" placeholder="פרט">
+        </div>
+
+        <div class="question">
+            <label class="font-bold">20. מהו היחס בין בדיקות ידניות לבדיקות אוטומטיות בתהליך הפיתוח שלכם?</label><br>
+            <select name="manual_auto_test_ratio" required>
+                <option value="">בחר אפשרות</option>
+                <option value="100% Manual">100% ידני</option>
+                <option value="75% Manual / 25% Auto">75% ידני / 25% אוטומטי</option>
+                <option value="50% Manual / 50% Auto">50% ידני / 50% אוטומטי</option>
+                <option value="25% Manual / 75% Auto">25% ידני / 75% אוטומטי</option>
+                <option value="100% Auto">100% אוטומטי</option>
+            </select>
+        </div>
+
+        <!-- ניטור ותחזוקה -->
+        <div class="section-title">
+            <h2 class="text-xl font-bold">ניטור ותחזוקה</h2>
+        </div>
+
+        <div class="question">
+            <label class="font-bold">21. אילו כלי ניטור ולוגים אתם משתמשים כיום?</label><br>
+            <select name="monitoring_tools" required multiple>
+                <option value="ELK">ELK Stack (Elasticsearch, Logstash, Kibana)</option>
+                <option value="Splunk">Splunk</option>
+                <option value="Datadog">Datadog</option>
+                <option value="New Relic">New Relic</option>
+                <option value="Prometheus">Prometheus + Grafana</option>
+                <option value="Other">אחר</option>
+            </select>
+            <input type="text" name="monitoring_tools_other" class="mt-2 hidden" placeholder="פרט">
+        </div>
+
+        <div class="question">
+            <label class="font-bold">22. תארו בקצרה את מערכת ההתראות האוטומטית שלכם:</label><br>
+            <textarea name="alert_system" rows="4" required></textarea>
+        </div>
+
+        <!-- אתגרים ודרישות למעבר לענן -->
+        <div class="section-title">
+            <h2 class="text-xl font-bold">אתגרים ודרישות למעבר לענן</h2>
+        </div>
+
+        <div class="question">
+            <label class="font-bold">23. מהם האתגרים העיקריים שאתם צופים במעבר לענן? (ניתן לסמן יותר מאחד)</label><br>
+            <input type="checkbox" name="cloud_challenges" value="Security"> אבטחת מידע<br>
+            <input type="checkbox" name="cloud_challenges" value="Costs"> עלויות<br>
+            <input type="checkbox" name="cloud_challenges" value="Complexity"> מורכבות טכנית<br>
+            <input type="checkbox" name="cloud_challenges" value="Resistance"> התנגדות ארגונית<br>
+            <input type="checkbox" name="cloud_challenges" value="Training"> הכשרת עובדים<br>
+            <input type="checkbox" name="cloud_challenges" value="Compliance"> תאימות לרגולציה<br>
+            <input type="checkbox" name="cloud_challenges" value="Other"> אחר:
+            <input type="text" name="cloud_challenges_other" class="mt-2">
+        </div>
+
+        <div class="question">
+            <label class="font-bold">24. אילו דרישות רגולטוריות או של אבטחת מידע יש לקחת בחשבון במעבר לענן?</label><br>
+            <textarea name="regulatory_requirements" rows="4" required></textarea>
+        </div>
+
+        <div class="question">
+            <label class="font-bold">25. מהן הציפיות שלכם מבחינת ביצועים ויכולת הרחבה בסביבת הענן?</label><br>
+            <textarea name="cloud_performance_expectations" rows="4" required></textarea>
+        </div>
+
+        <!-- אינטגרציות ותלויות -->
+        <div class="section-title">
+            <h2 class="text-xl font-bold">אינטגרציות ותלויות</h2>
+        </div>
+
+        <div class="question">
+            <label class="font-bold">26. אילו אינטגרציות קיימות כיום בין הכלים השונים בתהליך ה-SDLC שלכם?</label><br>
+            <textarea name="current_integrations" rows="4" required></textarea>
+        </div>
+
+        <div class="question">
+            <label class="font-bold">27. האם יש תלויות קריטיות בין מוצרים/כלים שיש לקחת בחשבון במעבר לענן?</label><br>
+            <textarea name="critical_dependencies" rows="4" required></textarea>
+        </div>
+
+        <!-- שיקולים נוספים -->
+        <div class="section-title">
+            <h2 class="text-xl font-bold">שיקולים נוספים</h2>
+        </div>
+
+        <div class="question">
+            <label class="font-bold">28. מהו לוח הזמנים המשוער למעבר לענן?</label><br>
+            <select name="cloud_migration_timeline" required>
+                <option value="">בחר אפשרות</option>
+                <option value="0-3 months">0-3 חודשים</option>
+                <option value="3-6 months">3-6 חודשים</option>
+                <option value="6-12 months">6-12 חודשים</option>
+                <option value="1-2 years">1-2 שנים</option>
+                <option value="2+ years">יותר מ-2 שנים</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label class="font-bold">29. האם יש העדפה לספק ענן מסוים?</label><br>
+            <select name="preferred_cloud_provider" required>
+                <option value="">בחר אפשרות</option>
+                <option value="AWS">AWS</option>
+                <option value="Azure">Azure</option>
+                <option value="Google Cloud">Google Cloud Platform</option>
+                <option value="IBM Cloud">IBM Cloud</option>
+                <option value="Oracle Cloud">Oracle Cloud</option>
+                <option value="Other">אחר</option>
+            </select>
+            <input type="text" name="preferred_cloud_provider_other" class="mt-2 hidden" placeholder="פרט">
+        </div>
+
+        <div class="question">
+            <label class="font-bold">30. מהו התקציב המשוער למעבר לענן ולרכישת כלים חדשים?</label><br>
+            <select name="cloud_migration_budget" required>
+                <option value="">בחר אפשרות</option>
+                <option value="Up to $10,000">עד 10,000$</option>
+                <option value="$10,000 - $50,000">10,000$ - 50,000$</option>
+                <option value="$50,000 - $100,000">50,000$ - 100,000$</option>
+                <option value="$100,000 - $500,000">100,000$ - 500,000$</option>
+                <option value="Over $500,000">מעל 500,000$</option>
+            </select>
+        </div>
+
+         <div class="question">
+            <label class="font-bold">31. באילו תחומים נדרשת הכשרה לצוות בטכנולוגיות ענן? (ניתן לסמן יותר מאחד)</label><br>
+            <input type="checkbox" name="cloud_training_needs" value="Architecture"> ארכיטקטורת ענן<br>
+            <input type="checkbox" name="cloud_training_needs" value="DevOps"> DevOps בענן<br>
+            <input type="checkbox" name="cloud_training_needs" value="Security"> אבטחת מידע בענן<br>
+            <input type="checkbox" name="cloud_training_needs" value="Networking"> רשתות בענן<br>
+            <input type="checkbox" name="cloud_training_needs" value="Containers"> קונטיינרים ואורקסטרציה<br>
+            <input type="checkbox" name="cloud_training_needs" value="Serverless"> טכנולוגיות Serverless<br>
+            <input type="checkbox" name="cloud_training_needs" value="Other"> אחר:
+            <input type="text" name="cloud_training_needs_other" class="mt-2">
+        </div>
+
+        <button type="submit" class="mt-6">שלח שאלון</button>
+    </form>
+    </div>
+
+    <script>
+const form = document.getElementById('surveyForm');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+const questions = document.querySelectorAll('.question');
+const totalQuestions = questions.length;
+
+// עדכון שורת ההתקדמות
+function updateProgress() {
+    const answeredQuestions = document.querySelectorAll('.question:not(.unanswered)').length;
+    const progress = (answeredQuestions / totalQuestions) * 100;
+    progressBar.style.width = `${progress}%`;
+    progressText.textContent = `${answeredQuestions} מתוך ${totalQuestions} שאלות נענו`;
+}
+
+// הוספת אירועי שינוי לכל השאלות
+questions.forEach(question => {
+    const inputs = question.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('change', () => {
+            question.classList.remove('unanswered');
+            updateProgress();
+        });
+    });
+    question.classList.add('unanswered');
+});
+
+// טיפול בשליחת הטופס
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    let surveyData = {};
+
+    for (let [key, value] of formData.entries()) {
+        if (surveyData[key]) {
+            if (!Array.isArray(surveyData[key])) {
+                surveyData[key] = [surveyData[key]];
+            }
+            surveyData[key].push(value);
+        } else {
+            surveyData[key] = value;
+        }
+    }
+
+    console.log('נתוני השאלון:', surveyData);
+    alert('השאלון נשלח בהצלחה!');
+});
+
+// הצגת שדות טקסט נוספים כאשר בוחרים "אחר"
+document.querySelectorAll('select, input[type="checkbox"]').forEach(element => {
+    if (element.tagName === 'SELECT') {
+        const otherInput = element.parentElement.querySelector('input[type="text"]');
+        if (otherInput) {
+            element.addEventListener('change', () => {
+                otherInput.classList.toggle('hidden', element.value !== 'Other');
+            });
+        }
+    } else if (element.type === 'checkbox' && element.value === 'Other') {
+        const otherInput = element.parentElement.querySelector('input[type="text"]');
+        if (otherInput) {
+            element.addEventListener('change', () => {
+                otherInput.classList.toggle('hidden', !element.checked);
+            });
+        }
+    }
+});
+
+// אתחול מצב התצוגה של שדות "אחר"
+document.querySelectorAll('input[type="text"][name$="_other"]').forEach(input => {
+    input.classList.add('hidden');
+});
+
+// עדכון התקדמות ראשוני
+updateProgress();
+      
+      form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    let surveyData = {};
+
+    for (let [key, value] of formData.entries()) {
+        if (surveyData[key]) {
+            if (!Array.isArray(surveyData[key])) {
+                surveyData[key] = [surveyData[key]];
+            }
+            surveyData[key].push(value);
+        } else {
+            surveyData[key] = value;
+        }
+    }
+
+    // שליחת הנתונים ל-Google Forms
+    fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        redirect: 'follow',
+        body: JSON.stringify(surveyData)
+    })
+    .then(response => {
+        alert('השאלון נשלח בהצלחה!');
+        form.reset();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('אירעה שגיאה בשליחת השאלון. אנא נסו שוב מאוחר יותר.');
+    });
+});
+      function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+  
+  var headers = Object.keys(data);
+  if (sheet.getLastRow() == 0) {
+    sheet.appendRow(headers);
+  }
+  
+  var row = headers.map(function(header) {
+    return data[header];
+  });
+  
+  sheet.appendRow(row);
+  
+  return ContentService.createTextOutput("Success");
+}
+      
+    </script>
+</body>
+</html>
